@@ -1,0 +1,43 @@
+---
+- hosts: all
+  become: true
+  pre_tasks:
+
+  - name: install updates (Ubuntu)
+    tags: always
+    apt:
+      update_cache: true
+    changed_when: false
+    when: ansible_distribution == "Ubuntu"
+
+  - name: update repository index (CentOS)
+    tags: always
+    dnf:
+      update_cache: true
+    changed_when: false
+    when: ansible_distribution == "CentOS"
+
+- hosts: web_servers
+  become: true
+  roles:
+    - { role: web_servers, tags: ["webSvr"] }
+
+- hosts: file_servers
+  become: true
+  roles:
+    - { role: file_servers, tags: ["fileSvr"] }
+
+- hosts: db_servers
+  become: true
+  roles:
+    - { role: db_servers, tags: ["dbSvr"] }
+
+- hosts: workstations
+  become: true
+  roles:
+    - { role: workstations, tags: ["control"] }
+
+- hosts: all
+  become: true
+  roles:
+    - { role: nagios, tags: ["nagios"] }

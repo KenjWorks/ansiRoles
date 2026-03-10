@@ -1,0 +1,30 @@
+---
+- name: install nagios on Ubuntu
+  tags: install_nagios
+  apt:
+    name: "{{ Ubuntu_pkg }}"
+    state: present
+  when: ansible_distribution == "Ubuntu"
+
+- name: install nagios on CentOS
+  tags: install_nagios
+  yum:
+    name: "{{ CentOS_pkg }}"
+    state: present
+  when: ansible_distribution == "CentOS"
+
+- name: configure nagios service on Ubuntu
+  tags: service_nagios
+  service:
+    name: nagios4
+    state: started
+    enabled: true
+  when: ansible_distribution == "Ubuntu"
+
+- name: configure nagios service on CentOS
+  tags: service_nagios
+  service:
+    name: nagios
+    state: started
+    enabled: true
+  when: ansible_distribution == "CentOS"
