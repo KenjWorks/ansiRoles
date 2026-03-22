@@ -4,27 +4,27 @@
   apt:
     name: "{{ Ubuntu_pkg }}"
     state: present
-  when: ansible_distribution == "Ubuntu"
+  when: ansible_os_family == "Debian"
 
 - name: install nagios on CentOS
   tags: install_nagios
   yum:
     name: "{{ CentOS_pkg }}"
     state: present
-  when: ansible_distribution == "CentOS"
+  when: ansible_os_family == "RedHat"
 
 - name: configure nagios service on Ubuntu
   tags: service_nagios
   service:
     name: nagios4
     state: started
-    enabled: true
-  when: ansible_distribution == "Ubuntu"
+    enabled: yes
+  when: ansible_os_family == "Debian"
 
 - name: configure nagios service on CentOS
   tags: service_nagios
   service:
     name: nagios
     state: started
-    enabled: true
-  when: ansible_distribution == "CentOS"
+    enabled: yes
+  when: ansible_os_family == "RedHat"

@@ -1,11 +1,7 @@
 ---
 Ubuntu_pkg:
   - nagios4
-  - nagios-plugins
 
 CentOS_pkg:
   - nagios
-  - nagios-plugins-ping
-  - nagios-plugins-http
-  - nagios-plugins-load
-  - nagios-plugins-disk
+  - epel-release
